@@ -15,6 +15,7 @@
     </div>
 </div>
     {% include 'ipam/inc/vlangroup_header.html' %}
+    {% include 'ipam/inc/toggle_available.html' %}
     <div class="row">
         <div class="col-md-12">
             {% include 'utilities/obj_table.html' with table=vlan_table table_template='panel_table.html' heading='VLANs' bulk_edit_url='ipam:vlan_bulk_edit' bulk_delete_url='ipam:vlan_bulk_delete' %}

@@ -849,7 +849,9 @@ class VLANGroupVLANsView(PermissionRequiredMixin, View):
         vlan_group = get_object_or_404(VLANGroup.objects.all(), pk=pk)
 
         vlans = VLAN.objects.filter(group_id=pk)
-        vlans = add_available_vlans(vlan_group, vlans)
+        # Add available vlans to the table if requested
+        if request.GET.get('show_available', 'true') == 'true':
+            vlans = add_available_vlans(vlan_group, vlans)
 
         vlan_table = tables.VLANDetailTable(vlans)
         if request.user.has_perm('ipam.change_vlan') or request.user.has_perm('ipam.delete_vlan'):
@@ -875,6 +877,7 @@ class VLANGroupVLANsView(PermissionRequiredMixin, View):
             'first_available_vlan': vlan_group.get_next_available_vid(),
             'vlan_table': vlan_table,
             'permissions': permissions,
+            'show_available': request.GET.get('show_available', 'true') == 'true',
         })
 
 
